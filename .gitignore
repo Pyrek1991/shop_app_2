@@ -49,3 +49,4 @@ app.*.map.json
 /.metadata
 /web/
 /windows/
+/test/widget_test.dart
