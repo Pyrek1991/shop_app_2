@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './screens/products_overview_screen.dart';
 import './screens/product_detail_screen.dart';
+import 'package:shop_app_2/providers/products.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'MyShop',
-      theme: ThemeData(
-        primarySwatch: Colors.grey,
-        accentColor: Colors.deepOrange,
-        fontFamily: 'Lato',
+    return ChangeNotifierProvider(
+      create: (ctx) => Products(),
+      child: MaterialApp(
+        title: 'MyShop',
+        theme: ThemeData(
+          primarySwatch: Colors.grey,
+          accentColor: Colors.deepOrange,
+          fontFamily: 'Lato',
+        ),
+        home: ProductsOverviewScreen(),
+        routes: {
+          ProductDetailScreen.routeNamed: (ctx) => ProductDetailScreen(),
+        },
       ),
-      home: ProductsOverviewScreen(),
-      routes: {
-        ProductDetailScreen.routeNamed: (ctx) => ProductDetailScreen(),
-      },
     );
   }
 }
