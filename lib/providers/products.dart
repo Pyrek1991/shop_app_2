@@ -42,6 +42,10 @@ class Products with ChangeNotifier {
     return [..._items];       // PL tu zwracamy kopie // EN here we return the copies
   }
 
+  Product findById(String id) {
+    return _items.firstWhere((prod) => prod.id == id);
+  }
+
   void addProduct() {
     // _items.add(value);
     notifyListeners();
