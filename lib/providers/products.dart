@@ -111,9 +111,21 @@ class Products with ChangeNotifier {
     }
   }
 
-  void updateProduct(String id, Product newProduct) {
+  Future<void> updateProduct(String id, Product newProduct) async {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
+      final url = Uri.parse(
+          'https://flutter-update-1d5bf-default-rtdb.europe-west1.firebasedatabase.app/products/$id.json');
+      await http.patch(
+        url,
+        body: json.encode({
+          'title': newProduct.title,
+          'description': newProduct.description,
+          'imageUrl': newProduct.imageUrl,
+          'price': newProduct.price,
+//          'isFavorite': newProduct.isFavorite,                      //nie dodajemy tutaj bo za każdym razem bym nam kasowało ulubione, a takiego efektu nie chce
+        }),
+      );
       _items[prodIndex] = newProduct;
       notifyListeners();
     } else {
