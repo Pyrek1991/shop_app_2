@@ -24,6 +24,10 @@ class Auth with ChangeNotifier {
     return null;
   }
 
+  String get userId {
+    return _userId;
+  }
+
   static const params = {
     'key': 'AIzaSyBzUK1SjoCIMypZKE72GAXM5xUR8ahIi1E',
     // Here you enter your own key
