@@ -9,6 +9,10 @@ import './product.dart';
 class Products with ChangeNotifier {
   List<Product> _items = [];
 
+  final String authToken;
+
+  Products(this.authToken, this._items);
+
   List<Product> get items {
     return [..._items]; // PL tu zwracamy kopie // EN here we return the copies
   }
@@ -23,7 +27,7 @@ class Products with ChangeNotifier {
 
   Future<void> fetchAndSetProducts() async {
     final url = Uri.parse(
-        'https://flutter-update-1d5bf-default-rtdb.europe-west1.firebasedatabase.app/products.json');
+        'https://flutter-update-1d5bf-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=$authToken');
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
