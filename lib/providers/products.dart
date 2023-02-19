@@ -54,11 +54,11 @@ class Products with ChangeNotifier {
 
 // Informacja dla mnie
 // async automatycznie sprawa że to jest kod asynchroniczny
-// await daje znać, że ma poczekać na zakończenie tej oprecji zanim przejdzie dalej
+// await daje znać, że ma poczekać na zakończenie tej operacji zanim przejdzie dalej
 
   Future<void> addProduct(Product product) async {
     final url = Uri.parse(
-        'https://flutter-update-1d5bf-default-rtdb.europe-west1.firebasedatabase.app/products.json');
+        'https://flutter-update-1d5bf-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=$authToken');
     try {
       final response = await http.post(
         url,
@@ -90,7 +90,7 @@ class Products with ChangeNotifier {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
       final url = Uri.parse(
-          'https://flutter-update-1d5bf-default-rtdb.europe-west1.firebasedatabase.app/products/$id.json');
+          'https://flutter-update-1d5bf-default-rtdb.europe-west1.firebasedatabase.app/products/$id.json?auth=$authToken');
       await http.patch(
         url,
         body: json.encode({
@@ -110,7 +110,7 @@ class Products with ChangeNotifier {
 
   Future<void> deletedProduct(String id) async {
     final url = Uri.parse(
-        'https://flutter-update-1d5bf-default-rtdb.europe-west1.firebasedatabase.app/products/$id.json');
+        'https://flutter-update-1d5bf-default-rtdb.europe-west1.firebasedatabase.app/products/$id.json?auth=$authToken');
     final existingProductIndex =
         _items.indexWhere((element) => element.id == id);
     var existingProduct = _items[existingProductIndex];
