@@ -46,8 +46,11 @@ class Products with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
-      url = Uri.parse(
-          'https://flutter-update-1d5bf-default-rtdb.europe-west1.firebasedatabase.app/userFavorite/$userId.json?auth=$authToken');
+      var auth = {
+        'auth': authToken,
+      };
+      url = Uri.https(
+          'flutter-update-1d5bf-default-rtdb.europe-west1.firebasedatabase.app', '/userFavorite/$userId.json', auth);
       final favoriteResponse = await http.get(url);
       final favoriteData = json.decode(favoriteResponse.body);
       final List<Product> loadedProducts = [];
