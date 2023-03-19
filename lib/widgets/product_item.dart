@@ -38,59 +38,57 @@ class ProductItem extends StatelessWidget {
               arguments: product.id,
             );
           },
-          child: FadeInImage(
-            placeholder: AssetImage('assets/images/product-placeholder.png'),
-            image: NetworkImage(product.imageUrl),
-            fit: BoxFit.cover,
+          child: Hero(
+            tag: product.id,
+            child: FadeInImage(
+              placeholder: AssetImage('assets/images/product-placeholder.png'),
+              image: NetworkImage(product.imageUrl),
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
-      ),
-      footer: GridTileBar(
-        backgroundColor: Colors.black87,
-        // PL tutaj jest zaiteresowany zmianami
-        leading: Consumer<Product>(
-          builder: (ctx, product, _) =>
-              IconButton(
-                // PL ikona po lewej, EN icon left
-                icon: Icon(
-                    product.isFavorite ? Icons.favorite : Icons
-                        .favorite_border),
-                onPressed: () {
-                  product.toggleFavoriteStatus(authData.token, authData.userId);
-                },
-                color: Theme
-                    .of(context)
-                    .accentColor,
-              ),
-          child: Text('Never changes!'),
-        ),
-        title: Text(
-          product.title,
-          textAlign: TextAlign.center,
-        ),
-        trailing: IconButton(
-          // PL ikona po prawej, EN icon right
-          icon: Icon(Icons.shopping_cart),
-          onPressed: () {
-            cart.addItem(product.id, product.price, product.title);
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Added item to cart'),
-                duration: Duration(seconds: 2),
-                action: SnackBarAction(
-                  label: 'UNDO',
-                  onPressed: () {
-                    cart.removeSingleItem(product.id);
-                  },
+        footer: GridTileBar(
+          backgroundColor: Colors.black87,
+          // PL tutaj jest zaiteresowany zmianami
+          leading: Consumer<Product>(
+            builder: (ctx, product, _) => IconButton(
+              // PL ikona po lewej, EN icon left
+              icon: Icon(
+                  product.isFavorite ? Icons.favorite : Icons.favorite_border),
+              onPressed: () {
+                product.toggleFavoriteStatus(authData.token, authData.userId);
+              },
+              color: Theme.of(context).accentColor,
+            ),
+            child: Text('Never changes!'),
+          ),
+          title: Text(
+            product.title,
+            textAlign: TextAlign.center,
+          ),
+          trailing: IconButton(
+            // PL ikona po prawej, EN icon right
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () {
+              cart.addItem(product.id, product.price, product.title);
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Added item to cart'),
+                  duration: Duration(seconds: 2),
+                  action: SnackBarAction(
+                    label: 'UNDO',
+                    onPressed: () {
+                      cart.removeSingleItem(product.id);
+                    },
+                  ),
                 ),
-              ),
-            );
-          },
-          color: Theme
-              .of(context)
-              .accentColor,
+              );
+            },
+            color: Theme.of(context).accentColor,
+          ),
         ),
       ),
-    ),);
+    );
   }
 }
